@@ -66,7 +66,9 @@ for (const name of names) {
   // theo deck-elite ("nhãn phụ, chú thích 18pt"). Phân biệt bằng nội dung + màu.
   const isChrome = r =>
     r.color === '6B7280' ||                       // màu Grey = chú thích
-    /^STAGE\b/i.test(r.text) ||                   // nhãn stage cho cô định vị
+    // Nhãn stage: brand.stageTag() luôn viết HOA toàn bộ và ≤ 20pt.
+    // Nhận bằng dấu hiệu đó thay vì bắt chữ phải mở đầu bằng "STAGE".
+    (r.pt <= 20 && /[A-ZÀ-Ỹ]/.test(r.text) && r.text === r.text.toUpperCase()) ||
     /^\[(ẢNH|AUDIO)/.test(r.text) ||              // ô chờ, sẽ bị thay bằng ảnh thật
     /Ms\.Ngọc Elite English/.test(r.text) ||
     /^\s*[·\d]+\s*$/.test(r.text);

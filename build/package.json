@@ -1,13 +1,14 @@
 {
-  "name": "msngoc-kidsbox-decks",
-  "version": "1.0.0",
+  "name": "msngoc-kidsbox",
+  "version": "2.0.0",
   "private": true,
-  "description": "Dựng slide bài giảng Kid's Box theo hệ nhận diện Ms.Ngọc Elite English",
+  "description": "Bộ dựng slide bài giảng Kid's Box theo hệ nhận diện Ms.Ngọc Elite English",
   "scripts": {
-    "build": "node deck-starter-u01.js",
-    "build:fallback": "FALLBACK_FONTS=1 node deck-starter-u01.js",
-    "audit": "node audit-deck.js ../slides/KIDS_KB-Starter_U01_B01.pptx",
-    "preview": "node render-preview.js ../slides/KIDS_KB-Starter_U01_B01.pptx /tmp/kb-preview 2,7,9,12",
+    "scan": "node scan-kho.js",
+    "build": "node deck.js lessons/kb1-u01-l01.js",
+    "build:fallback": "node deck.js lessons/kb1-u01-l01.js --fallback",
+    "audit": "node audit-deck.js ../slides/KIDS_KB1_U01_L01.pptx",
+    "preview": "node render-preview.js ../slides/KIDS_KB1_U01_L01.pptx ./preview 2,5,9,12",
     "check": "npm run build && npm run audit"
   },
   "dependencies": {

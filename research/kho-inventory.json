@@ -1,0 +1,46 @@
+{
+  "kho": "/tmp/claude-0/-home-user-classroom/e531fb6f-557b-5254-b282-0bb644390fa0/scratchpad/KIDS-BOX-test",
+  "quetLuc": "2026-09-22T07:47:56.790Z",
+  "tongFile": 9,
+  "theoLoai": {
+    "RAR (nén)": 8,
+    "PDF (có thể là sách)": 1
+  },
+  "ungVienSach": [
+    {
+      "ten": "Kids Box New Generation 1 Pupils Book.pdf",
+      "mb": 2.9,
+      "duong": "Kids Box New Generation 1 Pupils Book.pdf"
+    }
+  ],
+  "cauTruc": {
+    "1": {
+      "units": {
+        "1": [
+          1,
+          2,
+          3
+        ],
+        "2": [
+          5
+        ]
+      },
+      "review": [
+        "32-33"
+      ],
+      "movers": []
+    },
+    "4": {
+      "units": {
+        "4": [
+          1,
+          4
+        ]
+      },
+      "review": [],
+      "movers": [
+        "88-89"
+      ]
+    }
+  }
+}

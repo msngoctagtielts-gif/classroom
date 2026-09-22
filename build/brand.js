@@ -3,12 +3,13 @@
  * Hệ nhận diện Ms.Ngọc Elite English — dùng chung cho mọi deck.
  * Thông số lấy nguyên từ skill `deck-elite` (references/brand-system.md).
  *
- * Font: mặc định dùng font thương hiệu. Nếu máy giáo viên thiếu font,
- * chạy với biến môi trường FALLBACK_FONTS=1 để đổi sang Georgia + Calibri
- * (có sẵn trên mọi máy Windows/Office) — dấu tiếng Việt vẫn hiển thị đúng.
+ * Font: mặc định dùng font thương hiệu. Nếu máy giáo viên thiếu font và dấu tiếng Việt
+ * bị lỗi, thêm cờ --fallback để đổi sang Georgia + Calibri (có sẵn trên mọi máy
+ * Windows/Office):   npm run build:fallback
  */
 
-const FALLBACK = process.env.FALLBACK_FONTS === '1';
+// Nhận cả cờ dòng lệnh --fallback (chạy được trên Windows cmd) lẫn biến môi trường.
+const FALLBACK = process.argv.includes('--fallback') || process.env.FALLBACK_FONTS === '1';
 
 const C = {
   navy:     '0F2A4A',

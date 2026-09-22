@@ -1,127 +1,142 @@
-# Kid's Box Starter → Level 4 — Bộ tài liệu giảng dạy
+# Kid's Box 1 → 4 — Bộ tài liệu giảng dạy
 
-Ms.Ngọc Elite English · dựng ngày 22/09/2026
+Ms.Ngọc Elite English · cho bé **từ 5 tuổi rưỡi** · lớp giao tiếp
 
 ---
 
-## Trước hết: về việc tải sách
+## Chạy trên máy của cô
 
-**Không tải file PDF Kid's Box từ mạng về dùng.** Kid's Box là giáo trình có bản quyền của
-Cambridge University Press & Assessment. Các bản PDF trôi nổi đều là bản vi phạm bản quyền, và
-một trung tâm dạy học bị phát hiện dùng sách lậu là rủi ro pháp lý lẫn rủi ro thương hiệu.
+### Cách nhanh nhất — một nhấp đúp
 
-Bộ tài liệu này đi đường khác:
+1. Tải cả thư mục này về máy (nút **Code → Download ZIP** trên GitHub), giải nén.
+2. Cài **Node.js** bản LTS ở https://nodejs.org — chỉ cài một lần.
+3. Nhấp đúp vào **`CHAY-TREN-MAY.bat`**.
 
-| Thứ | Nguồn |
+File `.bat` tự làm hết: cài thư viện, quét kho giáo trình, dựng slide, soi lỗi slide.
+
+Nếu kho sách của cô **không** nằm ở `D:\KHO-MSNGOC\1_NOI-BO\01_NGUON-NXB\KIDS-BOX`,
+cô mở `CHAY-TREN-MAY.bat` bằng Notepad và sửa **dòng thứ 6**.
+
+### Muốn gõ lệnh
+
+```bash
+cd build
+npm install                                  # lần đầu
+npm run scan                                 # quét kho giáo trình
+npm run build                                # dựng slide
+npm run audit                                # soi file .pptx vừa dựng
+```
+
+Nếu dấu tiếng Việt trên slide bị lỗi vì máy thiếu font thương hiệu:
+
+```bash
+npm run build:fallback                       # đổi sang Georgia + Calibri
+```
+
+### Muốn Claude chạy thẳng trên máy cô
+
+Phiên này chạy trên máy chủ đám mây nên **không đọc được ổ `D:`**. Muốn em đọc thẳng kho của cô,
+cô cài **Claude Code** trên máy Windows rồi mở nó ngay trong thư mục kho. Khi đó em đọc file
+trực tiếp, không cần cô gửi gì cả.
+
+Còn nếu vẫn dùng phiên đám mây: chạy `npm run scan`, rồi kéo file
+`research/kho-inventory.json` vào khung chat. Em biết kho có đúng những gì.
+
+---
+
+## Có gì trong này
+
+```
+research/
+  kids-box-1-4-kien-truc.md        ★ Kiến trúc 4 cuốn đã điều chỉnh — đọc file này trước
+  phan-tich-do-tuoi-va-mat-xich.md   Vì sao bé 5.5 tuổi không vào thẳng KB1
+  kids-box-scope-and-sequence.md     Bản đồ giáo trình, mức tin cậy từng nguồn
+  kho-inventory.json                 (sinh ra sau khi chạy npm run scan)
+
+lesson-plans/
+  KIDS_KB1_U01_L01.md              Giáo án đủ 12 mục · KB1 U1 L1 tr.4–5 · STT 68.8%
+
+slides/
+  KIDS_KB1_U01_L01.pptx            Deck 17 slide, mở bằng PowerPoint là dạy được
+
+build/
+  scan-kho.js                      Quét kho, rút cấu trúc từ tên file
+  deck.js                          Bộ dựng slide (không cần sửa)
+  lessons/kb1-u01-l01.js           Dữ liệu một bài — copy file này để thêm bài mới
+  brand.js                         Hệ màu, font, lưới
+  audit-deck.js                    Soi file .pptx
+  render-preview.js                Xuất ảnh slide để nhìn bằng mắt
+```
+
+---
+
+## Thêm một bài mới
+
+Không sửa `deck.js`. Chỉ cần:
+
+```bash
+cd build/lessons
+copy kb1-u01-l01.js kb1-u01-l02.js      # Windows
+```
+
+Mở file mới, sửa `meta` và mảng `slides`, rồi chạy:
+
+```bash
+node ../deck.js lessons/kb1-u01-l02.js
+node ../audit-deck.js ../../slides/KIDS_KB1_U01_L02.pptx
+```
+
+Mỗi slide khai báo một trường `speak` — *"slide này khiến bé nói bằng cách nào?"*.
+Nếu không trả lời được câu đó thì xóa slide, đừng giữ.
+
+---
+
+## Về sách gốc
+
+**Không tải PDF Kid's Box từ mạng.** Kid's Box có bản quyền của Cambridge University Press;
+bản PDF trôi nổi đều là bản vi phạm, và một trung tâm dạy học dùng sách lậu là rủi ro pháp lý
+lẫn thương hiệu. Dùng **sách bản quyền cô đã mua** để soạn bài thì hợp pháp.
+
+Trong tài liệu, mọi chỗ ghi `[SÁCH tr.__]` là **ô chờ** — nội dung ngôn ngữ của sách
+(từ vựng, mẫu câu, lời bài hát, số track) chưa được điền vì chưa đọc được sách.
+Slide cũng không chiếu lại trang sách; các khung gạch đứt `[ẢNH: …]` là chỗ cô thả hình
+flashcard của mình vào.
+
+---
+
+## Bộ soi slide
+
+`audit-deck.js` đọc thẳng **XML bên trong file `.pptx` đã xuất**, không đọc mã dựng ra nó —
+nên nó bắt được cả lỗi mà mã nhìn có vẻ đúng. Nó kiểm:
+
+| Luật | Kiểm gì |
 |---|---|
-| Tên unit, số unit, mức CEFR | Thông tin Cambridge công bố công khai |
-| Giáo án, timeline, hoạt động, rubric | Trung tâm tự thiết kế |
-| Slide | Trung tâm tự dựng, hệ nhận diện riêng |
-| **Từ vựng, mẫu câu, bài nghe, hình ảnh** | **Để trống có nhãn `[SÁCH tr.__]`** — điền từ sách cô đã mua |
+| Cỡ chữ | Chữ **bé đọc** phải ≥ 24pt. Chữ cho cô (nhãn stage, footer, ô chờ ảnh) được 18pt. |
+| Tương phản | Gold `#C9A227` **không được** làm chữ trên nền sáng — chỉ đạt 2.42:1, trượt WCAG |
+| Burgundy | Tối đa 1 lần mỗi slide |
+| Lề an toàn | 0.6 inch mỗi cạnh |
+| Chồng lấn | Hai khối chữ không được đè nhau |
+| Ngân sách chữ | Slide hoạt động nói ≤ 12 từ, giới thiệu ngôn ngữ ≤ 20, hướng dẫn ≤ 25 |
 
-Cách hoàn tất: cô chụp trang mục lục và trang bài cần dạy trong Pupil's Book gửi vào đây,
-em điền chính xác vào các ô trống. Dùng sách bản quyền của chính mình để soạn bài là hợp pháp.
+Nó đã bắt được **6 lỗi thật** qua hai vòng dựng: chữ Gold trên nền sáng ở 9 slide,
+khối tràn lề ở 14 slide, "⏱ 5 phút" đè lên footer, tiêu đề canh giữa bị lệch,
+và một chỗ chính luật của em phân loại sai nhãn stage.
 
----
-
-## Nội dung
-
-```
-research/kids-box-scope-and-sequence.md   Bản đồ 5 level, exit standard, mức tin cậy từng nguồn
-lesson-plans/KIDS_KB-Starter_U01_B01.md   Giáo án đủ 12 mục, Starter Unit 1, bé 5–6 tuổi
-slides/KIDS_KB-Starter_U01_B01.pptx       Deck 17 slide, mở bằng PowerPoint
-build/                                    Mã dựng slide và bộ kiểm tra tự động
-```
-
-## Dùng thế nào
-
-Mở thẳng file `.pptx` trong `slides/` là dạy được. Trên slide có các khung gạch đứt
-`[ẢNH: …]` — kéo thả hình từ flashcard vào đó là xong.
-
-**Nếu máy thiếu font thương hiệu** (Playfair Display, Be Vietnam Pro) và dấu tiếng Việt bị lỗi,
-dựng lại bản dùng font có sẵn trên mọi máy Windows:
-
-```bash
-cd build && npm install
-FALLBACK_FONTS=1 node deck-starter-u01.js
-```
-
-## Dựng deck cho unit khác
-
-`build/deck-starter-u01.js` là bản mẫu. Copy ra file mới, thay nội dung theo timeline của giáo án
-tương ứng, rồi chạy bộ kiểm tra:
-
-```bash
-node deck-starter-u01.js                              # dựng + kiểm ngân sách chữ
-node audit-deck.js ../slides/<file>.pptx              # soi file thật: cỡ chữ, màu, lề, chồng lấn
-node render-preview.js ../slides/<file>.pptx /tmp/x 2,7,12   # xuất ảnh để nhìn bằng mắt
-```
-
-`audit-deck.js` đọc thẳng XML bên trong file `.pptx` chứ không đọc mã nguồn dựng ra nó — nên nó
-bắt được cả lỗi mà mã nhìn có vẻ đúng. Nó đã bắt được 4 lỗi thật trong lần dựng đầu tiên.
+**Giới hạn phải nói rõ:** máy dựng không cài LibreOffice Impress nên không render được `.pptx`
+đúng như PowerPoint hiển thị. Ảnh kiểm tra là bản dựng lại hình học từ XML — đúng về vị trí,
+màu, cỡ chữ, chồng lấn, nhưng **không** kiểm được cách PowerPoint tự ngắt dòng và thay font.
+Cô mở thử trên máy sẽ dạy, lướt 17 slide một lượt trước khi vào lớp.
 
 ---
 
-## BÁO CÁO KIỂM ĐỊNH — Bộ Kid's Box Starter→4 — 22/09/2026
+## Việc còn lại
 
-**KẾT QUẢ: PASS** (sau khi sửa)
-
-| Nhóm | Số lỗi | Đã sửa |
+| # | Việc | Ai |
 |---|---|---|
-| A — chặn giao hàng | 2 | 2 |
-| B — văn phong | 0 | — |
-| C — sư phạm | 1 | 1 |
-| D — thiết kế | 5 | 4 (1 chờ cô) |
-
-### Lỗi nhóm A
-
-- **A1 — số liệu không nguồn.** Cột "Tuổi khuyến nghị", "Số buổi", "Thời lượng dự kiến" ban đầu
-  trình bày như số liệu khách quan. Cambridge **không** công bố bảng tuổi theo từng level.
-  → Đã gắn nhãn **"giả định thiết kế của trung tâm"** và thêm bảng phân loại nguồn cho mọi con số.
-- **A3 — nội dung giáo trình chưa đọc sách gốc.** Tên unit lấy từ nguồn cộng đồng, không phải mục lục sách.
-  → Đã thêm mục 6 công khai mức tin cậy từng level, kèm ghi nhận **một nguồn đã trả về sai**
-  (gán danh sách unit Level 1 cho Starter; phát hiện nhờ đối chiếu chéo).
-
-### Lỗi nhóm C
-
-- **C4 — thiếu ICQ.** Ba hoạt động dài hơn 3 phút (stage 3, 4, 6) không có ICQ.
-  → Đã bổ sung, giờ đủ ICQ cho cả 6 hoạt động dài.
-
-### Lỗi nhóm D
-
-| Lỗi | Phát hiện bằng | Xử lý |
-|---|---|---|
-| D3 — Gold làm chữ trên nền sáng (dấu `·` ở footer, nhãn stage ở 8 slide) | bộ soi XML | Đổi sang Grey và Navy |
-| D — khối tràn lề an toàn 0.6in (footer 14 slide, tiêu đề slide 2) | bộ soi XML | Kéo vào trong lề |
-| D — hai khối chữ đè nhau (slide 12: "⏱ 5 phút" đè footer) | render ảnh, nhìn mắt | Dời lên, **và bổ sung phép kiểm tra chồng lấn vào bộ soi** |
-| D — tiêu đề canh giữa bị lệch phải | render ảnh, nhìn mắt | Trừ phần thụt trái vào bề rộng |
-| **D7 — chưa có file logo** | kiểm tra thủ công | **Chờ cô gửi file logo** (hiện dùng chữ thay logo) |
-
-Kiểm tra đã PASS: D1 ngân sách chữ (17/17 slide), D2 cỡ chữ học viên ≥ 24pt, D4 Burgundy ≤ 1/slide,
-D5 dấu tiếng Việt (soi mắt chuỗi "Thấu hiểu để dẫn lối", "Ngọc", "MẪU CÂU"), D6 mọi slide trả lời được
-"khiến học viên nói bằng cách nào".
-
-Kiểm tra sư phạm đã PASS: **STT = 70%** (chuẩn ≥ 60%), 2 outcome, hoạt động dài nhất 6 phút
-(chu kỳ chú ý ≤ 7 phút), 3 hoạt động vận động, homework 15 phút.
-
-### Một giới hạn phải nói rõ
-
-Máy dựng tài liệu này **không cài LibreOffice Impress**, nên không convert được `.pptx` để xem
-đúng như PowerPoint hiển thị. Ảnh kiểm tra là bản dựng lại hình học từ chính XML trong file —
-kiểm chứng được vị trí, kích thước, màu, cỡ chữ, chồng lấn, tràn lề. **Không** kiểm chứng được
-cách PowerPoint tự ngắt dòng và thay thế font.
-
-→ **Cô mở thử file trên máy sẽ dạy trước khi vào lớp**, xem lướt 17 slide một lượt.
-Nếu chữ bị tràn hoặc dấu bị lỗi, chạy lại với `FALLBACK_FONTS=1` như hướng dẫn ở trên.
-
----
-
-## ĐIỂM CẦN CÔ NGỌC QUYẾT
-
-1. **Đang dùng phiên bản nào?** Kid's Box có 3 phiên bản lưu hành, số unit khác nhau
-   (2nd Edition 12 unit, New Generation 8–12 unit). Bản đồ hiện ghi rõ nguồn từng level,
-   nhưng cần cô xác nhận để chốt.
-2. **Ảnh trang mục lục** của từng cuốn — để em điền các ô `[SÁCH tr.__]` và xác nhận tên unit.
-3. **File logo** để thay phần chữ ở slide bìa và slide cuối.
-4. **Unit tiếp theo cần dựng deck?** Hiện mới có Starter Unit 1. Cô chọn thứ tự ưu tiên,
-   em dựng tiếp theo đúng bản mẫu này.
+| 1 | Chạy `CHAY-TREN-MAY.bat`, gửi em `kho-inventory.json` | Cô |
+| 2 | Xác nhận **KB2 có bao nhiêu unit** ở bản New Generation | Cô |
+| 3 | Gửi ảnh trang mục lục 4 cuốn | Cô |
+| 4 | Điền toàn bộ ô `[SÁCH tr.__]` | Em |
+| 5 | Dựng 4 bộ cầu nối K1–K4 | Em |
+| 6 | Dựng đề thi Kids từng chặng | Em |
+| 7 | Quyết nhóm 5.5 tuổi: mua Starter hay dựng Kids L0 | Cô — **đang gác lại** |
