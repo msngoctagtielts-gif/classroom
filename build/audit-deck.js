@@ -7,6 +7,7 @@
  */
 const { execSync } = require('child_process');
 const path = require('path');
+const B = require('./brand.js');
 
 const EMU = 914400;                 // EMU mỗi inch
 const PAGE = { w: 13.333, h: 7.5, margin: 0.6 };
@@ -64,14 +65,7 @@ for (const name of names) {
   // ── D2 (stop-slop): deck Kids — chữ HỌC VIÊN đọc phải ≥ 24pt.
   // Chữ dành cho GIÁO VIÊN (nhãn stage, footer, ô chờ ảnh/audio) được phép 18pt
   // theo deck-elite ("nhãn phụ, chú thích 18pt"). Phân biệt bằng nội dung + màu.
-  const isChrome = r =>
-    r.color === '6B7280' ||                       // màu Grey = chú thích
-    // Nhãn stage: brand.stageTag() luôn viết HOA toàn bộ và ≤ 20pt.
-    // Nhận bằng dấu hiệu đó thay vì bắt chữ phải mở đầu bằng "STAGE".
-    (r.pt <= 20 && /[A-ZÀ-Ỹ]/.test(r.text) && r.text === r.text.toUpperCase()) ||
-    /^\[(ẢNH|AUDIO)/.test(r.text) ||              // ô chờ, sẽ bị thay bằng ảnh thật
-    /Ms\.Ngọc Elite English/.test(r.text) ||
-    /^\s*[·\d]+\s*$/.test(r.text);
+  const isChrome = B.laChuChoCo;
   // Slide 1 (P01 Cover) được miễn: dòng phụ trên bìa là thông tin cho giáo viên,
   // không phải nội dung bé đọc. deck-elite cũng miễn slide bìa khỏi Luật 1.
   runs.filter(r => no !== 1 && !isChrome(r) && r.pt < 24).forEach(r =>

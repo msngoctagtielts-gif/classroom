@@ -95,6 +95,27 @@ function imageSlot(slide, pptx, { x, y, w, h, label }) {
   });
 }
 
+/**
+ * Chữ này dành cho GIÁO VIÊN hay cho BÉ đọc?
+ *
+ * Chữ cho cô (nhãn stage, chân trang, ô chờ ảnh, chú thích, số trang) được phép 18pt
+ * theo deck-elite. Chữ BÉ đọc phải ≥ 24pt. Hai bộ soi dùng chung hàm này để không
+ * bộ nào báo động giả còn bộ kia bỏ sót.
+ *
+ * @param {{pt:number,color:?string,text:string}} r  một run chữ
+ */
+function laChuChoCo(r) {
+  const t = String(r.text || '');
+  return (
+    r.color === C.grey ||                                   // Grey = chú thích
+    // Nhãn stage: stageTag() luôn viết HOA toàn bộ và ≤ 20pt
+    (r.pt <= 20 && /[A-ZÀ-Ỹ]/.test(t) && t === t.toUpperCase()) ||
+    /^\[(ẢNH|AUDIO|SÁCH|Cô )/.test(t) ||                    // ô chờ, sẽ bị thay
+    /Ms\.Ngọc Elite English/.test(t) ||
+    /^\s*[·\d]+\s*$/.test(t)                                // số trang, dấu phân cách
+  );
+}
+
 /** Đếm từ hiển thị — dùng cho kiểm tra ngân sách chữ */
 function countWords(s) {
   return String(s).trim().split(/\s+/).filter(Boolean).length;
@@ -102,5 +123,5 @@ function countWords(s) {
 
 module.exports = {
   C, F, PAGE, CONTENT_W, SP, SIZE, FALLBACK,
-  bgIvory, bgWhite, bgNavy, goldBar, footer, stageTag, imageSlot, countWords,
+  bgIvory, bgWhite, bgNavy, goldBar, footer, stageTag, imageSlot, countWords, laChuChoCo,
 };
