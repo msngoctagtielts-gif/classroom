@@ -36,6 +36,20 @@ phải hiệu chỉnh lại và bỏ nhãn "giả định".
 
 ---
 
+> ### ⚠️ Đã có bằng chứng mới — đọc `phan-tich-do-tuoi-va-mat-xich.md` trước
+>
+> Ngày 22/09/2026 em truy cập được Drive của cô và đọc được **cách đặt tên file** trong kho
+> PPT (`KIDS BOX 1 UNIT 11 LESSON 3 P82-83`, `KIDS BOX 4 REVIEW UNITS 1 & 2 P26-27`…).
+> Đây là bằng chứng mạnh hơn nguồn cộng đồng đã dùng để dựng tài liệu này, và nó **xác nhận
+> cô đang dùng bản New Generation**, đồng thời cho biết:
+>
+> - **Kid's Box 1: 12 unit**, mỗi lesson 2 trang, Review sau **mỗi 4 unit**
+> - **Kid's Box 3 và 4: 8 unit**, mỗi unit 4 lesson, Review sau **mỗi 2 unit**
+> - Kid's Box 4 có **phần luyện thi A1 Movers** ở cuối sách (trang 88–95)
+>
+> Nghĩa là KB1 và KB4 **không cùng một khuôn** — điều tài liệu này chưa phản ánh.
+> Phần phân tích độ tuổi và thiết kế mắt xích đã chuyển sang tài liệu mới.
+
 ## 1. Cảnh báo phiên bản — đọc trước khi dùng
 
 Kid's Box có **ba phiên bản đang lưu hành song song**, nội dung và **số unit khác nhau**:
